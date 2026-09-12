@@ -1,0 +1,48 @@
+---
+title: "Tugas Komputasi_2"
+author: "GRACIA ELKRIZA PURBA"
+date: "2026-09-10"
+---
+
+library(dplyr)
+
+# Masukkan data iris
+data(iris)
+
+#Tampilkan data Sepal.Length saja
+iris %>% select(Sepal.Length)
+# atau kalau mau vektor saja: iris %>% pull(Sepal.Length)
+
+#Tipe data tiap kolom
+glimpse(iris)
+
+#Buat variabel turunan dari Sepal.Width
+iris <- iris %>%
+  mutate(turunan = ifelse(Sepal.Width > 3, "Besar", "Kecil"))
+
+#Ubah nama variabel turunan menjadi "sepal"
+iris <- iris %>%
+  rename(sepal = turunan)
+
+#Ambil data dengan sepal = "Besar" dari species virginica
+data_virginica_besar <- iris %>%
+  filter(sepal == "Besar", Species == "virginica")
+data_virginica_besar
+
+#Cek jumlah species dalam data
+iris %>% count(Species)
+
+#Pecah data iris menjadi 3 data frame per species
+setosa_df     <- iris %>% filter(Species == "setosa")
+versicolor_df <- iris %>% filter(Species == "versicolor")
+virginica_df  <- iris %>% filter(Species == "virginica")
+
+# mengurutkan tiap data frame berdasarkan Sepal.Width
+setosa_df     <- setosa_df     %>% arrange(Sepal.Width)
+versicolor_df <- versicolor_df %>% arrange(Sepal.Width)
+virginica_df  <- virginica_df  %>% arrange(Sepal.Width)
+
+# Cek hasil
+head(setosa_df)
+head(versicolor_df)
+head(virginica_df)
